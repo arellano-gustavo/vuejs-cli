@@ -1,0 +1,199 @@
+<template>
+<div>
+    <b-modal  :id="modalRecover.id" hide-footer title="Recupera contraseña">
+    <recover></recover>
+  </b-modal>
+    <b-container class="text-left">
+        <b-row>
+            <b-col cols="2">
+            </b-col>
+            <b-col cols="5">
+                <b-card title="" :img-src='logo()' img-alt="Image" img-top tag="article" style="max-width: 40rem;" class="mb-4">
+                    <b-card-text>
+                    <b-container class="bv-example-row bv-example-row-flex-cols">
+                    <b-row align-v="start">
+                        <b-col cols="12">
+                            <b-form v-if="show">
+                        <b-form-group
+                            id="input-group-1"
+                            label="ID:"
+                            label-for="input-1"
+                            description=""
+                        >
+                            <b-form-input
+                            id="input-1"
+                            v-model="form.id"
+                            type="text"
+                            required
+                            placeholder="ID"
+                            ></b-form-input>
+                            <b-popover  target="input-1" :show.sync="pop1" variant="danger" triggers="manual" > 
+                                Introduce un valor correcto para ID.
+                            </b-popover>
+                        </b-form-group>
+                        <b-form-group id="input-group-2" label="Contraseña:" label-for="input-2">
+                            <b-form-input
+                            id="input-2"
+                            v-model="form.pass"
+                            required
+                            type="password"
+                            placeholder="Contraseña"
+                            @keyup.enter.native="valid"
+                            ></b-form-input>
+                            <b-popover  target="input-2" :show.sync="pop2" variant="danger" triggers="manual" >
+                                Introduce un valor correcto para Contraseña.
+                            </b-popover>
+                        </b-form-group>
+                         <b-container class="text-left">
+                            <b-row>
+                                <b-col cols="8">
+                                </b-col>
+                                <b-col cols="2">
+                                    <b-button type="button" variant="success" @click="this.valid">Entrar</b-button>
+                                </b-col>
+                                <b-col cols="2">
+                                    <b-button type="button" variant="white" id="lnkrecupera" @click="showModalRecover($event.target)">
+                                        <eva-icon name="menu" animation="pulse" fill="limegreen"></eva-icon>
+                                    </b-button>
+                                </b-col>
+                            </b-row>
+                         </b-container>
+                        </b-form>
+                        </b-col>
+                    </b-row>
+                    </b-container>
+                    </b-card-text>
+                </b-card>
+            </b-col>
+            <b-col cols="2">
+            </b-col>
+        </b-row>
+    </b-container>
+<div style="color:#dfdfdf;font-size:10px">version 0.1.1006 </div>
+</div>
+</template>
+
+<script>
+import recover from './sendRecover.vue'
+
+export default {
+    computed: {
+    },
+    created() {
+        let datar = JSON.parse(localStorage.getItem('crash'))
+        console.log(datar)
+      if(datar != null){
+          this.checkRol(datar.idOne)
+      }
+        
+    },
+    components:{
+       recover
+    },
+    data() {
+        return {
+            form: {
+                id:'',
+                pass:''
+            },
+        pop1:false,
+        pop2:false,
+        pop3:false,
+        show:true,
+        modalRecover: {
+          id: 'modalrecover',
+          title: '',
+          content: ''
+        }    
+        }
+    },
+    //Valida en la vista el tamaño de usuario y password
+    methods: {
+       showModalRecover(button) {
+        this.pop1 = false
+        this.pop2 = false
+        this.$bvModal.show('modalrecover')
+        this.$root.$emit('bv::show::modal', this.modalRecover.id, button)
+      },
+       validBoxes(namePop,nameInput,flag){
+           if(namePop =="pop1"){
+               this.pop1 = flag == false ? true:false;
+           }
+           if(namePop =="pop2"){
+               this.pop2 = flag == false ? true:false;
+           }
+
+         document.getElementById(nameInput).style.border = flag == false ? "1px solid red":"1px solid gray";
+       },
+        //Evento post valida antes de enviar
+       valid() {
+           let flagID = false;
+           let flagPASS = false;
+           //Validación ID
+
+           flagID = (this.form.id.length > 3 && this.form.id.length < 35) ? true:false;
+         flagPASS = (this.form.pass.length > 3 && this.form.pass.length < 32)? true:false;
+
+        //Validación ID
+         this.validBoxes("pop1","input-1",flagID)
+        //Validación PASS
+         this.validBoxes("pop2","input-2",flagPASS)
+          if(flagID && flagPASS)
+          {
+              this.validUsr()
+          }
+      },
+        //Obtene el logo del login del repositorio
+        logo() {
+            return require("../../assets/impi_logo.png")
+        },
+        validUsr() {
+            this.axios.post('/api/chatbot/auth/login.json', {
+                    user: this.form.id,
+                    password: this.form.pass
+                }, ).then((response) => {
+                    if(!response.data.succeed)
+                    {
+                        this.$bvToast.toast(response.data.message, {
+                            title: ``,
+                            variant: 'warning',
+                            toaster: 'b-toaster-bottom-right',
+                            solid: true
+                        });
+                    }
+                    else
+                    {
+                       var myData = { 'idOne': response.data.roles[0].id,
+                                      'idtwo': response.data.areas[0].id,
+                                       'NameOne': response.data.roles[0].name,
+                                       'NameTwo': response.data.areas[0].name,
+                                       'jwt':response.data.jwt,
+                                       'FullName':response.data.fullName,
+                                       'id':response.data.user,
+                                       'ResponseData': response.data};
+                     const parsed = JSON.stringify(myData);
+                     localStorage.setItem('crash', parsed);
+                        this.checkRol(response.data.roles[0].id)
+                    }
+                })
+                .catch((e) => {
+                    this.$router.push('/checkAdmin')
+                });
+        },
+        checkRol(idRol) {
+
+            switch (idRol) {
+                case 1:
+                    this.$router.push('/masterAdm')
+                    break;
+                case 2:
+                    this.$router.push('/masterUsr')
+                    break;
+                default:
+                    this.$router.push('/checkAdmin')
+                    break;
+            }
+        }
+    }
+}
+</script>
