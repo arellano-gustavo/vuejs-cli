@@ -15,7 +15,6 @@ Plain, simple vuejs repo using its generator (vue 4)
     7  sudo npm install -g @vue/cli
     8  vue create gus-pba
     9  cd gus-pba/
-   10  npm run serve
+    10  npm run serve
    
-
 Done !!!
