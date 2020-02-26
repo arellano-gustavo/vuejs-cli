@@ -13,8 +13,10 @@ Plain, simple vuejs repo using its generator (vue 4)
     6  npm -v
 
     7  sudo npm install -g @vue/cli
-    8  vue create gus-pba
-    9  cd gus-pba/
-    10  npm run serve
+    8  git clone https://github.com/arellano-gustavo/vuejs-cli.git
+    9  cd vuejs-cli/
+    10  tar xzvf node_modules.tar.gz
+    11  npm run serve
+    12  Go to http://yor.ip.com:8080
    
 Done !!!
