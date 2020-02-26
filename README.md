@@ -16,5 +16,6 @@ Plain, simple vuejs repo using its generator (vue 4)
     8  vue create gus-pba
     9  cd gus-pba/
    10  npm run serve
+   
 
 Done !!!
