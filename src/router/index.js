@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import FirstPage from '@/components/FirstPage'
 import SecondPage from '@/components/SecondPage'
+import TerceraPage from '@/components/TerceraPage'
+import CuartaPage from '@/components/CuartaPage'
+import QuintaPage from '@/components/QuintaPage'
 
 Vue.use(VueRouter)
 
@@ -13,9 +16,24 @@ export default new VueRouter({
       component: FirstPage
     },
     {
-      path: '/otra',
-      name: 'otra',
+      path: '/segunda',
+      name: 'segunda',
       component: SecondPage
+    },
+    {
+      path: '/tercera',
+      name: 'tercera',
+      component: TerceraPage
+    },
+    {
+      path: '/cuarta',
+      name: 'cuarta',
+      component: CuartaPage
+    },
+    {
+      path: '/quinta',
+      name: 'quinta',
+      component: QuintaPage
     }
   ]
 })

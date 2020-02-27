@@ -4,7 +4,8 @@
         <b-row>
             <b-col cols="2"></b-col>
             <b-col cols="4">                
-                    <b-button @click="this.valid" variant="success">Actualizar</b-button>
+                    <h1>Primera</h1>
+                    <b-button @click="this.valid" variant="success">Ve a la segunda</b-button>
             </b-col>
             <b-col cols="6"></b-col>
         </b-row>
@@ -15,14 +16,12 @@
 <script>
 export default {
     data() {
-        return {
-            pop2: false
+        return {            
         }
     },
     methods: {
         valid() {
-          console.log('va...')
-          this.$router.push('otra')
+          this.$router.push('segunda')
         }
     }
 }
