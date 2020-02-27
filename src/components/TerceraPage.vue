@@ -19,16 +19,17 @@ export default {
         }
     },
     methods: {
-        valid() {
+        valid2() {
           this.$router.push('cuarta')
         },
-        valida2() {
+        valid() {
           axios.post('/sample', {
               firstName: 'Fred',
               lastName: 'Flintstone'
           })
           .then(function (response) {
               console.log(response);
+              this.$router.push('cuarta')
           })
           .catch(function (error) {
               console.log(error);
