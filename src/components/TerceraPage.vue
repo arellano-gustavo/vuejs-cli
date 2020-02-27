@@ -21,7 +21,20 @@ export default {
     methods: {
         valid() {
           this.$router.push('cuarta')
+        },
+        valida2() {
+          axios.post('/sample', {
+              firstName: 'Fred',
+              lastName: 'Flintstone'
+          })
+          .then(function (response) {
+              console.log(response);
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
         }
+
     }
 }
 </script>
