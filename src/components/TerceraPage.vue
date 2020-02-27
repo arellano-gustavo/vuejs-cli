@@ -4,7 +4,8 @@
         <b-row>
             <b-col cols="2"></b-col>
             <b-col cols="4">                
-                    <b-button @click="this.valid" variant="success">ve a la cuarta</b-button>
+                    <b-button @click="this.valid" 
+variant="success">Axios ve a la cuarta</b-button>
             </b-col>
             <b-col cols="6"></b-col>
         </b-row>
@@ -31,11 +32,11 @@ export default {
           })
           .then(function (response) {
               console.log(response);
-              this.$router.push('cuarta')
           })
           .catch(function (error) {
               console.log(error);
           });
+          this.$router.push('cuarta');
         }
 
     }
