@@ -1,0 +1,29 @@
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<groupId>mx.com.ultrasist</groupId>
+<artifactId>test-frontend</artifactId>
+<packaging>jar</packaging>
+<version>1.0.5-SNAPSHOT</version>
+<name>test-frontend</name>
+<dependencies> </dependencies>
+<properties>
+<jersey.version>2.26</jersey.version>
+<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>
+<repositories>
+<repository>
+<id>nexus.ci.ultrasist.net</id>
+<url>https://nexus.ci.ultrasist.net/repository/all/</url>
+<name>Kebblar Repository</name>
+</repository>
+</repositories>
+<distributionManagement>
+<snapshotRepository>
+<id>nexus.ci.ultrasist.net</id>
+<url>
+https://nexus.ci.ultrasist.net/repository/maven-snapshots/
+</url>
+<uniqueVersion>true</uniqueVersion>
+</snapshotRepository>
+</distributionManagement>
+</project>
