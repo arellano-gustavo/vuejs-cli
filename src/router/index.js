@@ -1,28 +1,21 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import HomePage from '@/components/HelloWorld'
-/*
-import CartPage from '@/pages/CartPage'
-import ProductPage from '@/pages/ProductPage'
-import GoosePage from '@/pages/GoosePage'
-import AxPage from '@/pages/AxPage'
-*/
-import OtraPage from '@/components/OtraPage'
+import VueRouter from 'vue-router'
+import FirstPage from '@/components/FirstPage'
+import SecondPage from '@/components/SecondPage'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
+export default new VueRouter({
   routes: [
     {
       path: '/',
       name: 'home',
-      component: HomePage
+      component: FirstPage
     },
     {
       path: '/otra',
       name: 'otra',
-      component: OtraPage
+      component: SecondPage
     }
-
   ]
 })
