@@ -21,7 +21,7 @@ Vue.use(Keycloak)
 Vue.config.productionTip = false
 
 
-/**/
+/** /
 new Vue({
   render: h => h(App),
   router
@@ -30,25 +30,28 @@ new Vue({
 /**/
 
 
-/** /
+/**/
 let initOptions = {
   url: 'https://keycloak.ci.ultrasist.net/auth', 
   realm: 'SpringBootKeycloak', 
-  clientId: 'login-app', 
-  onLoad:'login-required'
+  clientId: 'login-app',
+  credentials: {
+      secret: 'xxxx'
+  }
+  //onLoad:'login-required'
 }
 
 let keycloak = Keycloak(initOptions);
 
 keycloak.init({ 
-    onLoad: initOptions.onLoad
+    onLoad: 'login-required'
     //onLoad: 'check-sso' 
  }).success((auth) => {
  
     if(!auth) {
-      //window.location.reload();
+      window.location.reload();
     } else {
-      Vue.$log.info("Authenticated");
+      console.log("Authenticated");
     }
  
     new Vue({
@@ -63,18 +66,18 @@ keycloak.init({
     setTimeout(() => {
       keycloak.updateToken(70).success((refreshed)=>{
         if (refreshed) {
-          Vue.$log.debug('Token refreshed'+ refreshed);
+          console.log('Token refreshed'+ refreshed);
         } else {
-          Vue.$log.warn('Token not refreshed, valid for '
+          console.log('Token not refreshed, valid for '
           + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
         }
       }).error(()=>{
-          Vue.$log.error('Failed to refresh token');
+          console.log('Failed to refresh token');
       });
     }, 60000)
 
 }).error(() =>{
-  Vue.$log.error("Authenticated Failed");
+  console.log("Authenticated Failed");
 });
 
 
@@ -127,3 +130,4 @@ Vue.use(VueKeycloakJs, {
   }
 })
 /**/
+
