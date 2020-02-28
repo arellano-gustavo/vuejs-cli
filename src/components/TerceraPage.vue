@@ -26,9 +26,12 @@ export default {
           this.$router.push('cuarta')
         },
         valid() {
-          axios.post('/sample', {
-              firstName: 'Fred',
-              lastName: 'Flintstone'
+          var origen = '/sample';
+          origen = 'http://192.168.100.4:8081/sample';
+          axios.post(origen, {
+              id: 1,
+              name: 'Fred',
+              salary: 1234567890
           })
           .then(function (response) {
               console.log(response);
