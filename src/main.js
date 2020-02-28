@@ -33,8 +33,8 @@ new Vue({
 
 /**/
 let initOptions = {
-  url: 'https://keycloak.ci.ultrasist.net/auth', 
-  realm: 'SpringBootKeycloak', 
+  url: 'https://keycloak.ci.ultrasist.net/auth',
+  realm: 'SpringBootKeycloak',
   clientId: 'login-app',
   credentials: {
       secret: 'xxxx'
@@ -44,22 +44,21 @@ let initOptions = {
 
 let keycloak = Keycloak(initOptions);
 
-keycloak.init({ 
+keycloak.init({
     onLoad: 'login-required'
-    //onLoad: 'check-sso' 
+    //onLoad: 'check-sso'
  }).success((auth) => {
- 
+
     if(!auth) {
       window.location.reload();
     } else {
       console.log("Authenticated");
     }
- 
+
     new Vue({
       render: h => h(App),
       router
     }).$mount('#app')
-  
 
     localStorage.setItem("vue-token", keycloak.token);
     localStorage.setItem("vue-refresh-token", keycloak.refreshToken);
