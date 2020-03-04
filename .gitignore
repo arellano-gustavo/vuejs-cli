@@ -3,6 +3,9 @@ node_modules
 /dist
 /lib
 lib.tar.gz
+.settings
+.project
+.classpath
 
 # local env files
 .env.local
