@@ -3,7 +3,8 @@
     <b-container class="bv-example-row">
         <b-row>
             <b-col cols="2"></b-col>
-            <b-col cols="4">                
+            <b-col cols="4">
+                    <h1>Tercera Pagina</h1>
                     <b-button @click="this.valid1" variant="success">Otro (local)</b-button>
                     <br/>                    
                     <b-button @click="this.valid2" variant="success">Otro (remoto)</b-button>

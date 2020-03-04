@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import FirstPage from '@/components/FirstPage'
 import SecondPage from '@/components/SecondPage'
 import TerceraPage from '@/components/TerceraPage'
 import CuartaPage from '@/components/CuartaPage'
 import QuintaPage from '@/components/QuintaPage'
+
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 Vue.use(VueRouter)
 
@@ -18,7 +22,10 @@ const router = new VueRouter({
     {
       path: '/segunda',
       name: 'segunda',
-      component: SecondPage
+      component: SecondPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/tercera',
@@ -28,10 +35,7 @@ const router = new VueRouter({
     {
       path: '/cuarta',
       name: 'cuarta',
-      component: CuartaPage,
-      meta: {
-        requiresAuth: true
-      }
+      component: CuartaPage
     },
     {
       path: '/quinta',
@@ -41,17 +45,24 @@ const router = new VueRouter({
   ]
 })
 
-/**/
 router.beforeEach((to, from, next) => {
-  if(to=='abc') {  // LINEA DUMMY 1
-  //if (to.matched.some(record => record.meta.requiresAuth)) { // LINEA REAL 2
-    console.log("Se ha llegado a una pagina que contiene el meta de RequiresAuth: true !!!!!!");
+  const kc = router.app.$options.keycloak;
+  console.log(kc);
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  if (requiresAuth) {
+      //const auth = router.app.$keycloak.authenticated;
+      if (kc.authenticated) {
+        console.log("Se ha llegado a una pagina que contiene el meta de RequiresAuth, pero estoy autenticado !");
+        next()
+      } else {
+        console.log("Se ha llegado a una pagina que contiene el meta de RequiresAuth, pero NO estoy autenticado :(");
+        const loginUrl = kc.createLoginUrl()
+        window.location.replace(loginUrl)
+      }
   } else {
-    console.log(from);
-    console.log(to);
+    console.log("Se ha llegado a una pagina que NO contiene el meta de RequiresAuth");
+    next()
   }
-  next()
 })
-/**/
 
 export default router
