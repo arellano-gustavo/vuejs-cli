@@ -8,7 +8,7 @@ import QuintaPage from '@/components/QuintaPage'
 
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const router = new VueRouter({
   routes: [
     {
       path: '/',
@@ -28,7 +28,10 @@ export default new VueRouter({
     {
       path: '/cuarta',
       name: 'cuarta',
-      component: CuartaPage
+      component: CuartaPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/quinta',
@@ -38,17 +41,17 @@ export default new VueRouter({
   ]
 })
 
-/** /
+/**/
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (router.app.$keycloak.authenticated) {
-      next()
-    } else {
-      const loginUrl = router.app.$keycloak.createLoginUrl()
-      window.location.replace(loginUrl)
-    }
+  if(to=='abc') {  // LINEA DUMMY 1
+  //if (to.matched.some(record => record.meta.requiresAuth)) { // LINEA REAL 2
+    console.log("Se ha llegado a una pagina que contiene el meta de RequiresAuth: true !!!!!!");
   } else {
-    next()
+    console.log(from);
+    console.log(to);
   }
+  next()
 })
 /**/
+
+export default router
