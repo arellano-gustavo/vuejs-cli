@@ -4,7 +4,7 @@
         <b-row>
             <b-col cols="2"></b-col>
             <b-col cols="4">                
-                    <h1>Primer Pagina 2</h1>
+                    <h1>Primer Pagina 3</h1>
                     <b-button @click="this.valid" variant="success">Ve a la segunda</b-button>
             </b-col>
             <b-col cols="6"></b-col>
